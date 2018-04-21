@@ -51,12 +51,13 @@ function initOverlays(){
     var world_satellite_xyz_png_Layer = L.tileLayer(geoserver+'/xyz/world/{x}/{y}/{z}.jpeg', {maxZoom: 13});
     var china_city_xyz_png_Layer = L.tileLayer(geoserver+'/xyz/city/{x}/{y}/{z}.png', {maxZoom: 13});
     var china_city_xyz_geojson_Layer=initChina_City_xyz_geojson_Layer();
-    var gujiao50_xyz_geojson_Layer=initGujiao_Contour_xyz_geojson_Layer();
+    var gujiao_xyz_geojson_Layer=initGujiao_Contour_xyz_geojson_Layer();
 
     var gujiao50_tms_png_Layer= L.tileLayer(geoserver+"/tms/1.0.0/gujiao_contour50_line@EPSG:900913@png/{z}/{x}/{y}.png", {
         maxZoom: 15,
         tms: true
     });
+
     var gujiao_satellite_tms_png_Layer= L.tileLayer(geoserver+"/tms/1.0.0/gujiao_satellite_raster@EPSG:900913@png/{z}/{x}/{y}.png", {
         maxZoom: 17,
         tms: true
@@ -73,7 +74,7 @@ function initOverlays(){
 
     var overlays={
         '中国城市XYZ(geojson)':china_city_xyz_geojson_Layer,
-        '古交等高线XYZ(geojson)':gujiao50_xyz_geojson_Layer,
+        '古交等高线XYZ(geojson)':gujiao_xyz_geojson_Layer,
         '中国城市XYZ(png)':china_city_xyz_png_Layer,
         '中国城市TMS(png)':china_city_tms_png_Layer,
         '古交50米等高线XYZ(png)':gujiao50_xyz_png_Layer,
@@ -237,7 +238,7 @@ function initChina_City_xyz_geojson_Layer(){
 }
 
 function initGujiao_Contour_xyz_geojson_Layer(){
-    var urlTemplate=geoserver+"/xyz/gujiao_contour200_line/{x}/{y}/{z}.json";
+    var urlTemplate=geoserver+"/xyz/1.0.0/gujiao_contour_line@EPSG:4326@geojson/{x}/{y}/{z}.json";
     return new L.TileLayer.GeoJSON(urlTemplate,
         {
             //tms: true,
