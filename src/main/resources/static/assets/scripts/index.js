@@ -31,20 +31,7 @@ function initCity(){
             }
         },"json");
 }
-function initBaseMaps(){
-    var basemap_normal=L.tileLayer('http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}');
-    var basemap_satellite=L.tileLayer('http://mt3.google.cn/vt/lyrs=y@198&hl=zh-CN&gl=cn&src=app&x={x}&y={y}&z={z}&s=');
-    var basemap_terrain=L.tileLayer('http://c.tile.stamen.com/terrain/{z}/{x}/{y}.png');
-    var basemap_osm=L.tileLayer('https://c.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=6170aad10dfd42a38d4d8c709a536f38');
 
-    var baseMaps={
-    	"OSM":basemap_osm,
-        "高德":basemap_normal,
-        "地球":basemap_satellite,
-        "地形":basemap_terrain
-    };
-    return baseMaps;
-}
 function initOverlays(){
 	var gujiao50_xyz_png_Layer = L.tileLayer(geoserver+'/xyz/gujiao_contour50_line/{x}/{y}/{z}.png', {maxZoom: 15});
     var gujiao_satellite_xyz_png_Layer = L.tileLayer(geoserver+'/xyz/gujiao/{x}/{y}/{z}.png', {maxZoom: 17});
@@ -87,8 +74,18 @@ function initOverlays(){
     return overlays;
 }
 function initMap(){
-    var basemap=L.tileLayer('https://c.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=6170aad10dfd42a38d4d8c709a536f38');
-    var baseMaps=initBaseMaps();
+    //var basemap=L.tileLayer('https://c.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=6170aad10dfd42a38d4d8c709a536f38');
+    var basemap_osm=L.tileLayer('https://c.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=6170aad10dfd42a38d4d8c709a536f38');
+    var basemap_normal=L.tileLayer('http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}');
+    var basemap_satellite=L.tileLayer('http://mt3.google.cn/vt/lyrs=y@198&hl=zh-CN&gl=cn&src=app&x={x}&y={y}&z={z}&s=');
+    var basemap_terrain=L.tileLayer('http://c.tile.stamen.com/terrain/{z}/{x}/{y}.png');
+
+    var baseMaps={
+        "OSM":basemap_osm,
+        "高德":basemap_normal,
+        "地球":basemap_satellite,
+        "地形":basemap_terrain
+    };
     var overlays=initOverlays();
 
     //初始化地图控件
@@ -98,7 +95,7 @@ function initMap(){
         minZoom:3,
         maxZoom:18,
         zoomControl:false,	//不加载默认zoomControl,
-        layers: [basemap]
+        layers: [basemap_osm]
     });
 
     var zoomControl = L.control.zoom({

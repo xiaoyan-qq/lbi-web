@@ -24,6 +24,7 @@ function initMapTable(){
                     if(d.abstract!=null)return '<span title="'+d.abstract + '">'+d.title+'</span>';
                     else return '<span>'+d.title+'</span>';
                 }},
+            {"data": "group","title":"图层组","width":"40"},
             {"data": null,"title":"协议","width":"100",
             		
             		"orderable":false,
