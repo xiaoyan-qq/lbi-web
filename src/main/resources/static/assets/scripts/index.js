@@ -33,17 +33,13 @@ function initCity(){
 }
 
 function initOverlays(){
-	var gujiao50_xyz_png_Layer = L.tileLayer(geoserver+'/xyz/gujiao_contour50_line/{x}/{y}/{z}.png', {maxZoom: 15});
     var gujiao_satellite_xyz_png_Layer = L.tileLayer(geoserver+'/xyz/gujiao/{x}/{y}/{z}.png', {maxZoom: 17});
+    var jingzhuang_satellite_xyz_png_Layer = L.tileLayer(geoserver+'/xyz/1.0.0/jingzhuang_satellite_raster@EPSG:900913@png/{x}/{y}/{z}.png', {maxZoom: 17});
     var world_satellite_xyz_png_Layer = L.tileLayer(geoserver+'/xyz/world/{x}/{y}/{z}.jpeg', {maxZoom: 13});
     var china_city_xyz_png_Layer = L.tileLayer(geoserver+'/xyz/city/{x}/{y}/{z}.png', {maxZoom: 13});
     var china_city_xyz_geojson_Layer=initChina_City_xyz_geojson_Layer();
     var gujiao_xyz_geojson_Layer=initGujiao_Contour_xyz_geojson_Layer();
-
-    var gujiao50_tms_png_Layer= L.tileLayer(geoserver+"/tms/1.0.0/gujiao_contour50_line@EPSG:900913@png/{z}/{x}/{y}.png", {
-        maxZoom: 15,
-        tms: true
-    });
+    var jingzhuang_xyz_geojson_Layer=initJingZhuang_Contour_xyz_geojson_Layer();
 
     var gujiao_satellite_tms_png_Layer= L.tileLayer(geoserver+"/tms/1.0.0/gujiao_satellite_raster@EPSG:900913@png/{z}/{x}/{y}.png", {
         maxZoom: 17,
@@ -62,12 +58,12 @@ function initOverlays(){
     var overlays={
         '中国城市XYZ(geojson)':china_city_xyz_geojson_Layer,
         '古交等高线XYZ(geojson)':gujiao_xyz_geojson_Layer,
+        '静庄等高线XYZ(geojson)':jingzhuang_xyz_geojson_Layer,
         '中国城市XYZ(png)':china_city_xyz_png_Layer,
         '中国城市TMS(png)':china_city_tms_png_Layer,
-        '古交50米等高线XYZ(png)':gujiao50_xyz_png_Layer,
-        '古交50米等高线TMS(png)':gujiao50_tms_png_Layer,
         '古交卫星XYZ(png)':gujiao_satellite_xyz_png_Layer,
         '古交卫星TMS(png)':gujiao_satellite_tms_png_Layer,
+        '静庄卫星XYZ(png)':jingzhuang_satellite_xyz_png_Layer,
         '世界卫星XYZ(png)':world_satellite_xyz_png_Layer,
         '世界卫星TMS(png)':world_satellite_tms_png_Layer
     };
@@ -90,8 +86,9 @@ function initMap(){
 
     //初始化地图控件
     mapObj = L.map('mapbox', {
-        center: [37.9,111.9],
-        zoom: 6,
+        //center: [37.9,111.9],
+        center: [35.35,105],
+        zoom: 10,
         minZoom:3,
         maxZoom:18,
         zoomControl:false,	//不加载默认zoomControl,
@@ -203,6 +200,7 @@ function initCommonStyle(){
     commonstyle['poi']=marker;
 }
 
+
 function initChina_City_xyz_geojson_Layer(){
     var urlTemplate=geoserver+"/xyz/city/{x}/{y}/{z}.json";
     return new L.TileLayer.GeoJSON(urlTemplate,
@@ -240,6 +238,39 @@ function initGujiao_Contour_xyz_geojson_Layer(){
         {
             //tms: true,
 	        clipTiles:true,
+            unique:function(feature){
+                return feature.id;
+            }
+        },{
+            style:commonstyle['gray'],
+            onEachFeature:function(feature,layer){
+                if(feature.properties){
+                    var labelString='';
+                    for(var k in feature.properties){
+                        var v=feature.properties[k];
+                        labelString+=k+':'+v+'<br/>';
+                    }
+                    layer.bindLabel(labelString);
+                }
+                if(!(layer instanceof L.Point)){
+                    layer.on('mouseover',function(){
+                        layer.setStyle(commonstyle['high']);
+                    })
+                    layer.on('mouseout',function(){
+                        layer.setStyle(commonstyle['gray']);
+                    })
+                }
+            }
+        });
+}
+
+function initJingZhuang_Contour_xyz_geojson_Layer(){
+    var urlTemplate=geoserver+"/xyz/1.0.0/jingzhuang_contour_line@EPSG:4326@geojson/{x}/{y}/{z}.json";
+    //var urlTemplate="http://localhost:8080/xyz/1.0.0/jingzhuang_contour_line@EPSG:4326@geojson/{x}/{y}/{z}.json";
+    return new L.TileLayer.GeoJSON(urlTemplate,
+        {
+            //tms: true,
+            clipTiles:true,
             unique:function(feature){
                 return feature.id;
             }
