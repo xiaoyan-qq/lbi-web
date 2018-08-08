@@ -3,7 +3,8 @@ var cityList;
 var commonstyle;
 var geoserver;
 function init(){
-	geoserver="http://39.107.104.63:8080";
+	//geoserver="http://39.107.104.63:8080";
+    geoserver="http://localhost:8080";
     resizeMap();
     initCommonStyle();
     initMap();
