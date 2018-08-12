@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <title>登录</title>
+  <!-- Bootstrap 3.3.7 -->
+  <link th:href="@{/assets/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+  <!-- Font Awesome -->
+  <link th:href="@{/assets/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+  <!-- Ionicons -->
+  <link th:href="@{/assets/Ionicons/css/ionicons.min.css}" rel="stylesheet"/>
+  <!-- Theme style -->
+  <link th:href="@{/assets/AdminLTE/css/AdminLTE.min.css}" rel="stylesheet"/>
+  <link th:href="@{/assets/AdminLTE/css/skins/_all-skins.min.css}" rel="stylesheet"/>
+
+
+  <!-- Google Font -->
+  <!--<link rel="stylesheet" href="css/css.css">-->
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <a href="/"><b>数据门户</b></a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p th:if="${param.logout}" class="bg-warning">已注销</p>
+    <p th:if="${param.error}" class="bg-danger">有错误，请重试</p>
+    <!--<p class="login-box-msg">Sign in to start your session</p>-->
+
+    <form role="form" name="form" th:action="@{/login}" action="/login" method="post">
+      <div class="form-group has-feedback">
+        <input type="text" name="username" class="form-control" placeholder="用户名">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" name="password" class="form-control" placeholder="密码">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-8"></div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <input type="submit" id="login" value="登录" class="btn btn-primary"/>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+
+
+
+  </div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery 3 -->
+<script th:src="@{/assets/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script th:src="@{/assets/bootstrap/js/bootstrap.min.js}"></script>
+
+<script th:src="@{/scripts/login.js}"></script>
+</body>
+</html>

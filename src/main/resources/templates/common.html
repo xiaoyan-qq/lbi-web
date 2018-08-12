@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+
+    <!-- =========================== Header ================================ -->
+    <header th:fragment="header_meta">
+        <!-- Logo -->
+        <a href="/" class="logo">
+            <span class="logo-mini"><b>D</b></span>
+            <span class="logo-lg"><b>数据门户</b></span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <div class="navbar-custom-menu pull-left">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/meta">元数据<span class="sr-only">(current)</span></a></li>
+                    <li><a href="/admin">后台管理</a></li>
+                </ul>
+            </div>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown user user-menu">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="/assets/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <span class="hidden-xs" sec:authentication="name">Alexander</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header">
+                                <img src="/assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <p>
+                                    <span sec:authentication="name"></span>
+                                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                                        <small>管理员</small>
+                                    </div>
+                                    <div sec:authorize="hasRole('ROLE_OPS')">
+                                        <small>运维人员</small>
+                                    </div>
+                                </p>
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-right">
+                                    <a th:href="@{/logout}" class="btn btn-default btn-flat">注销</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+
+    <!-- =========================== Sidebar ================================ -->
+    <aside class="main-sidebar" th:fragment="sidebar_meta">
+        <section class="sidebar">
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="/assets/images/logo-trans-back.png" class="img-circle" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>八千云</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="header">元数据</li>
+                <li>
+                    <a href="/meta/loc">
+                        <i class="fa fa-map-marker"></i> <span>位置</span>
+                        <span class="pull-right-container">
+                          <small class="label pull-right bg-red">3</small>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/meta/directory">
+                        <i class="fa fa-map-o"></i> <span>服务目录</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </aside><!-- /.sidebar -->
+
+</body>
+</html>
