@@ -7,4 +7,5 @@ spring:
     username: postgres
     password: Cateye@2018
   table:
+    china_city_polygon: s_ods_city_simplify
     t_log: t_log

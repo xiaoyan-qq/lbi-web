@@ -2,8 +2,9 @@ var mapObj;
 var cityList;
 var commonstyle;
 var geoserver;
+var xyMarker;
 function init(){
-	geoserver="http://39.107.104.63:8080";
+	geoserver="http://localhost:8080";
     resizeMap();
     initCommonStyle();
     initMap();
@@ -12,10 +13,12 @@ function init(){
 
 function initCity(){
     $.get(
-        geoserver+"/city/getcitylist.json",
+        "/city/getcitylist.json",
         function(json){
             if(json.success){
                 var list=json.data;
+                list.push({adcode:"111",name:"古交",x:111.69073008803707,y:37.59651465252423,minX:111.69073008803707,minY:37.59651465252423,maxX:112.50720463078976,maxY:38.25637888992949});
+                list.push({adcode:"112",name:"静庄",x:104.77085056787423,y:35.10560793684285,minX:104.77085056787423,minY:35.10560793684285,maxX:105.14244032110284,maxY:35.58053135312061});
                 cityList=[];
                 for(var i=0;i<list.length;i++){
                     var item=list[i];
@@ -26,7 +29,7 @@ function initCity(){
                 $("#m_city").select2();
                 $('#m_city').change(function(){
                     var item=cityList[$('#m_city').val()];
-                    mapObj.fitBounds([[item.miny,item.minx],[item.maxy, item.maxx]]);
+                    mapObj.fitBounds([[item.minY,item.minX],[item.maxY, item.maxX]]);
                 });
             }
         },"json");
@@ -41,10 +44,7 @@ function initOverlays(){
     var gujiao_xyz_geojson_Layer=initGujiao_Contour_xyz_geojson_Layer();
     var jingzhuang_xyz_geojson_Layer=initJingZhuang_Contour_xyz_geojson_Layer();
 
-    var gujiao_satellite_tms_png_Layer= L.tileLayer(geoserver+"/tms/1.0.0/gujiao_satellite_raster@EPSG:900913@png/{z}/{x}/{y}.png", {
-        maxZoom: 17,
-        tms: true
-    });
+
     var world_satellite_tms_png_Layer= L.tileLayer(geoserver+"/tms/1.0.0/world_satellite_raster@EPSG:900913@jpeg/{z}/{x}/{y}.jpeg", {
         maxZoom: 13,
         tms: true
@@ -53,24 +53,25 @@ function initOverlays(){
         maxZoom: 11,
         tms: true
     });
+    var gujiao_satellite_tms_png_Layer= L.tileLayer(geoserver+"/tms/1.0.0/gujiao_satellite_raster@EPSG:900913@png/{z}/{x}/{y}.png", {
+        maxZoom: 17,
+        tms: true
+    });
+    var jingzhuang_satellite_tms_png_Layer= L.tileLayer(geoserver+"/tms/1.0.0/jingzhuang_satellite_raster@EPSG:900913@png/{z}/{x}/{y}.png", {
+        maxZoom: 17,
+        tms: true
+    });
 
 
     var overlays={
-        '中国城市XYZ(geojson)':china_city_xyz_geojson_Layer,
-        '古交等高线XYZ(geojson)':gujiao_xyz_geojson_Layer,
-        '静庄等高线XYZ(geojson)':jingzhuang_xyz_geojson_Layer,
-        '中国城市XYZ(png)':china_city_xyz_png_Layer,
-        '中国城市TMS(png)':china_city_tms_png_Layer,
-        '古交卫星XYZ(png)':gujiao_satellite_xyz_png_Layer,
-        '古交卫星TMS(png)':gujiao_satellite_tms_png_Layer,
-        '静庄卫星XYZ(png)':jingzhuang_satellite_xyz_png_Layer,
-        '世界卫星XYZ(png)':world_satellite_xyz_png_Layer,
-        '世界卫星TMS(png)':world_satellite_tms_png_Layer
+        '世界卫星影像':world_satellite_tms_png_Layer,
+        '中国城市面':china_city_tms_png_Layer,
+        '古交高分影像':gujiao_satellite_tms_png_Layer,
+        '静庄高分影像':jingzhuang_satellite_tms_png_Layer
     };
     return overlays;
 }
 function initMap(){
-    //var basemap=L.tileLayer('https://c.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=6170aad10dfd42a38d4d8c709a536f38');
     var basemap_osm=L.tileLayer('https://c.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=6170aad10dfd42a38d4d8c709a536f38');
     var basemap_normal=L.tileLayer('http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}');
     var basemap_satellite=L.tileLayer('http://mt3.google.cn/vt/lyrs=y@198&hl=zh-CN&gl=cn&src=app&x={x}&y={y}&z={z}&s=');
@@ -86,7 +87,6 @@ function initMap(){
 
     //初始化地图控件
     mapObj = L.map('mapbox', {
-        //center: [37.9,111.9],
         center: [35.35,105],
         zoom: 10,
         minZoom:3,
@@ -108,7 +108,6 @@ function initMap(){
     mapObj.on('mousemove', viewCoordinate);
 
     initMenuBar();
-    initStatusBar();
 }
 /**
  * 创建菜单条
@@ -128,26 +127,20 @@ function initMenuBar(){
     menu.addTo(mapObj);
     initCity();
 }
-/**
- * 创建状态条
- */
-function initStatusBar() {
-    var status = L.control({position: 'topleft'});
-    status.onAdd = function (map) {
-        this._div = L.DomUtil.create('div', 'm_statusbar'); // create a div with a class "info"
-        this.update();
-        return this._div;
-    };
-    status.update = function (props) {
-        var str='<div class="col-xs-6"><label id="i_coordinate"></label></div>';
-        str+='<div class="col-xs-6"><label id="i_map"></label></div>';
-        str+='<div class="col-xs-3"><label id="i_show"></label></div>';
-        this._div.innerHTML = str;
-    };
-    status.addTo(mapObj);
+
+function locationByXY(){
+    if(xyMarker!=null)mapObj.removeLayer(xyMarker);
+    var latlng=new L.LatLng($("#m_y").val(),$("#m_x").val());
+    var svgIcon=new L.DivIcon.SVGIcon({
+        color:'red',
+        fillColor : 'red',
+        iconSize : L.point(18,30)
+    });
+    xyMarker=new L.Marker(latlng,{icon:svgIcon}).addTo(mapObj);
+    mapObj.setView(latlng);
 }
 function getRemoteIP(){
-    $("#i_show").text("您的访问IP:"+returnCitySN["cip"]);
+    $("#m_ip").text("您的访问IP:"+returnCitySN["cip"]);
 }
 function initCommonStyle(){
     commonstyle={};
@@ -317,5 +310,6 @@ function viewCoordinate(evt){
  */
 function viewMapOption(){
     var bounds=mapObj.getBounds();
-    $("#i_map").text("级别="+mapObj.getZoom()+",中心("+bounds.getCenter().lng.toFixed(6)+","+bounds.getCenter().lat.toFixed(6)+"),边界["+bounds.getSouthWest().lng.toFixed(6)+","+bounds.getNorthEast().lng.toFixed(6)+","+bounds.getSouthWest().lat.toFixed(6)+","+bounds.getNorthEast().lat.toFixed(6)+"]");
+    $("#i_map").text("级别="+mapObj.getZoom()+",中心("+bounds.getCenter().lng.toFixed(9)+","+bounds.getCenter().lat.toFixed(9)+")");
+    $("#i_show").text("边界["+bounds.getSouthWest().lng.toFixed(9)+","+bounds.getNorthEast().lat.toFixed(9)+","+bounds.getSouthWest().lng.toFixed(9)+","+bounds.getNorthEast().lat.toFixed(9)+"]");
 }

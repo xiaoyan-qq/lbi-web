@@ -1,7 +1,7 @@
 var geoserver;
 var table;
 function init(){
-	geoserver="http://39.107.104.63:8080";
+	geoserver="http://localhost:8080";
 	initMapTable();
 	loadMapList();
 }
@@ -101,7 +101,7 @@ function initMapTable(){
     $('#maplist tbody').on('click', 'i.fa-map', function () {
         var tr = $(this).closest('tr');
         var row = table.row(tr);
-        var url="mapsets.html?mapid="+row.data().id;
+        var url="mapsets?mapid="+row.data().id;
         window.open(url);
     });
 }

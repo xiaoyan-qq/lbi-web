@@ -23,10 +23,23 @@
             <div class="box">
                 <div class="box-header with-border">
                     <i class="fa fa-map-marker"></i> <h3 class="box-title">地图服务</h3>
+                    <label id="m_ip"></label>
+                    <div class="box-tools pull-right">
+                        <input type="text" class="input-sm" placeholder="请输入经度" id="m_x" style="width:100px"/>
+                        <input type="text" class="input-sm" placeholder="请输入纬度" id="m_y" style="width:100px"/>
+                        <button type="button" class="btn btn-warning btn-flat" onclick="locationByXY()"><i class="fa fa-map-marker"></i>&nbsp;定位</button>
+                    </div>
                 </div>
                 <div class="box-body">
                     <div id="mapbox" style="width: 100%; height:100%;"></div>
                 </div>
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-xs-3"><label id="i_coordinate"></label></div>
+                        <div class="col-xs-6"><label id="i_map"></label></div>
+                        <div class="col-xs-3"><label id="i_show"></label></div>
+                    </div>
+                </div><!-- /.box-footer-->
             </div>
         </section>
     </div><!-- ./container -->

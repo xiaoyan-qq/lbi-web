@@ -1,10 +1,9 @@
 var geoserver;
 var params;
 function init(){
-	geoserver="http://39.107.104.63:8080";
+	geoserver="http://localhost:8080";
 	//initMapList();
 	params=GetRequest();
-	console.log(params["mapid"]);
 	loadMapDesc();
 	loadMapSets();
 }
@@ -71,6 +70,7 @@ function initMap(json){
         zoomControl:false,	//不加载默认zoomControl,
         layers: [basemap]
     });
+    mapObj.fitBounds([[json.minY,json.minX],[json.maxY, json.maxX]]);
 }
 function GetRequest() {
    var url = location.search; //获取url中含"?"符后的字串

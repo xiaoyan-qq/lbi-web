@@ -52,6 +52,11 @@ public class PageController {
         return "meta/directory";
     }
 
+    @RequestMapping("/meta/mapsets")
+    public String mapsets(){
+        return "meta/mapsets";
+    }
+
     @RequestMapping("/admin")
     public String admin(){
         return "admin";
