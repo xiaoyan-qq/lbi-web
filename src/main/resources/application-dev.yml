@@ -1,0 +1,8 @@
+################### DataSource Configuration ##########################
+spring:
+  datasource:
+    platform: postgres
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://rm-2ze378rwv37etj956bo.pg.rds.aliyuncs.com:3432/postgres
+    username: postgres
+    password: Cateye@2018

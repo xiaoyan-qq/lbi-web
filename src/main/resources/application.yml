@@ -1,14 +1,10 @@
 server:
-  port: 9999
+  port: 8888
 spring:
   application:
     name: lbi-web
-  datasource:
-    platform: postgres
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://rm-2ze378rwv37etj956bo.pg.rds.aliyuncs.com:3432/postgres
-    username: postgres
-    password: Cateye@2018
+  profiles:
+    active: prod
   mvc:
     favicon:
       enabled: true
