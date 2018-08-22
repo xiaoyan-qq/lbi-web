@@ -6,3 +6,5 @@ spring:
     url: jdbc:postgresql://rm-2ze378rwv37etj956bo.pg.rds.aliyuncs.com:3432/postgres
     username: postgres
     password: Cateye@2018
+  table:
+    t_log: t_log

@@ -1,8 +1,5 @@
-var mapserver;
 var table;
 function init(){
-	mapserver="http://39.107.104.63:8080";
-	//initChart();
 	loadThisDay();
 	loadLastDay();
 	loadLast7Day();
@@ -10,7 +7,7 @@ function init(){
 }
 function loadThisDay(){
 	$.get(
-        mapserver+"/log/getdaystat?kind=1",
+        "/log/getdaystat?kind=1",
         function(json){
             if(json.success){
                 var list=json.data;
@@ -43,7 +40,7 @@ function loadThisDay(){
 
 function loadLastDay(){
 	$.get(
-        mapserver+"/log/getdaystat?kind=2",
+        "/log/getdaystat?kind=2",
         function(json){
             if(json.success){
                 var list=json.data;
@@ -72,7 +69,7 @@ function loadLastDay(){
 
 function loadLast7Day(){
 	$.get(
-        mapserver+"/log/getdaystat?kind=3",
+        "/log/getdaystat?kind=3",
         function(json){
             if(json.success){
                 var list=json.data;
@@ -101,7 +98,7 @@ function loadLast7Day(){
 
 function loadLast1Month(){
 	$.get(
-        mapserver+"/log/getdaystat?kind=4",
+        "/log/getdaystat?kind=4",
         function(json){
             if(json.success){
                 var list=json.data;

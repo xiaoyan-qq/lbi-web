@@ -51,4 +51,14 @@ public class PageController {
     public String directory(){
         return "meta/directory";
     }
+
+    @RequestMapping("/admin")
+    public String admin(){
+        return "admin";
+    }
+
+    @RequestMapping("/admin/logs")
+    public String logs(){
+        return "admin/logs";
+    }
 }

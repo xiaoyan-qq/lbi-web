@@ -1,6 +1,7 @@
 package com.lbi.tile.dao;
 
 import com.lbi.tile.model.Stat;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository(value="logDao")
+@Slf4j
 public class LogDao {
     @Resource(name="jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
@@ -23,7 +25,7 @@ public class LogDao {
     public List<Stat> getLogStat(String sql){
         List<Stat> list=null;
         try{
-            System.out.println("sql:"+sql);
+            //System.out.println("sql:"+sql);
             list=jdbcTemplate.query(
                     sql,
                     new RowMapper<Stat>() {
@@ -35,8 +37,9 @@ public class LogDao {
                             return u;
                         }
                     });
-        }catch (Exception ex){
-            ex.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error(e.getMessage());
         }
         return list;
     }
@@ -64,7 +67,7 @@ public class LogDao {
             }
             sb.append(" group by ip");
             sb.append(" order by count(1) desc limit "+limit);
-            System.out.println("sql:"+sb.toString());
+            //System.out.println("sql:"+sb.toString());
             list=jdbcTemplate.query(
                     sb.toString(),
                     new RowMapper<String>() {
@@ -72,8 +75,9 @@ public class LogDao {
                             return rs.getString("ip");
                         }
                     });
-        }catch (Exception ex){
-            ex.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error(e.getMessage());
         }
         return list;
     }

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>元数据</title>
+    <title>后台管理</title>
     <link th:href="@{/favicon.ico}" rel="icon" >
     <link th:href="@{/assets/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/assets/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
@@ -14,46 +14,29 @@
 </head>
 <body class="hold-transition skin-yellow-light sidebar-collapse sidebar-mini">
 <div class="wrapper">
-    <header class="main-header" th:include="common :: header_meta"></header>
-    <aside class="main-sidebar" th:include="common :: sidebar_meta"></aside>
+    <header class="main-header" th:include="common :: header_admin"></header>
+    <aside class="main-sidebar" th:include="common :: sidebar_admin"></aside>
 
     <div class="content-wrapper">
 
             <section class="content">
                 <!-- =========================================================== -->
-                <!--<h2 class="page-header">数据</h2>-->
 
                 <div class="row">
                     <div class="col-md-4">
                         <div class="box box-widget widget-user-2">
-                            <a href="/meta/loc">
+                            <a href="/admin/logs">
                                 <div class="widget-user-header bg-green">
                                     <div class="widget-user-image">
                                         <img class="img-circle" src="/assets/img/gdps1.png">
                                     </div>
                                     <!-- /.widget-user-image -->
-                                    <h3 class="widget-user-username">地图</h3>
-                                    <h5 class="widget-user-desc">示例地图</h5>
+                                    <h3 class="widget-user-username">日志</h3>
+                                    <h5 class="widget-user-desc">日志管理</h5>
                                 </div>
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="box box-widget widget-user-2">
-                            <a href="/meta/directory">
-                                <div class="widget-user-header bg-aqua">
-                                    <div class="widget-user-image">
-                                        <img class="img-circle" src="/assets/img/gdps2.png">
-                                    </div>
-                                    <!-- /.widget-user-image -->
-                                    <h3 class="widget-user-username">服务目录</h3>
-                                    <h5 class="widget-user-desc">地图服务目录</h5>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-
                 </div>
 
             </section>
