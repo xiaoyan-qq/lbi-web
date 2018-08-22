@@ -2,5 +2,5 @@
 地图门户
 
 ```
-nohup java -jar lbi-web-1.0-SNAPSHOT.jar &
+nohup java -jar lbi-web-1.0-SNAPSHOT.jar --spring.profiles.active=prod &
 ```
