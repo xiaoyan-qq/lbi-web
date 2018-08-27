@@ -19,6 +19,7 @@ function initCity(){
                 var list=json.data;
                 list.push({adcode:"111",name:"古交",x:111.69073008803707,y:37.59651465252423,minX:111.69073008803707,minY:37.59651465252423,maxX:112.50720463078976,maxY:38.25637888992949});
                 list.push({adcode:"112",name:"静庄",x:104.77085056787423,y:35.10560793684285,minX:104.77085056787423,minY:35.10560793684285,maxX:105.14244032110284,maxY:35.58053135312061});
+                list.push({adcode:"113",name:"云南",x:103.37809033219204,y:26.92051250519370,minX:103.37809033219204,minY:26.92051250519370,maxX:103.65317576522527,maxY:27.16169880229407});
                 cityList=[];
                 for(var i=0;i<list.length;i++){
                     var item=list[i];
@@ -61,13 +62,15 @@ function initOverlays(){
         maxZoom: 17,
         tms: true
     });
+    var yunnan_satellite_png_Layer=L.tileLayer(geoserver+'/xyz/1.0.0/yunnan_satellite_timeraster_201703@EPSG:900913@png/{x}/{y}/{z}.png', {maxZoom: 17});
 
 
     var overlays={
         '世界卫星影像':world_satellite_tms_png_Layer,
         '中国城市面':china_city_tms_png_Layer,
         '古交高分影像':gujiao_satellite_tms_png_Layer,
-        '静庄高分影像':jingzhuang_satellite_tms_png_Layer
+        '静庄高分影像':jingzhuang_satellite_tms_png_Layer,
+        '云南高分影像':yunnan_satellite_png_Layer
     };
     return overlays;
 }
