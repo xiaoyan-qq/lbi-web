@@ -62,7 +62,8 @@ function initOverlays(){
         maxZoom: 17,
         tms: true
     });
-    var yunnan_satellite_png_Layer=L.tileLayer(geoserver+'/xyz/1.0.0/yunnan_satellite_timeraster_201703@EPSG:900913@png/{x}/{y}/{z}.png', {maxZoom: 17});
+    var yunnan_satellite_png_Layer1=L.tileLayer(geoserver+'/xyz/1.0.0/yunnan_satellite_timeraster_201703@EPSG:900913@png/{x}/{y}/{z}.png', {maxZoom: 17});
+    var yunnan_satellite_png_Layer2=L.tileLayer(geoserver+'/xyz/1.0.0/yunnan_satellite_timeraster_201709@EPSG:900913@png/{x}/{y}/{z}.png', {maxZoom: 17});
 
 
     var overlays={
@@ -70,7 +71,8 @@ function initOverlays(){
         '中国城市面':china_city_tms_png_Layer,
         '古交高分影像':gujiao_satellite_tms_png_Layer,
         '静庄高分影像':jingzhuang_satellite_tms_png_Layer,
-        '云南高分影像':yunnan_satellite_png_Layer
+        '云南高分影像(201703)':yunnan_satellite_png_Layer1,
+        '云南高分影像(201709)':yunnan_satellite_png_Layer2
     };
     return overlays;
 }
