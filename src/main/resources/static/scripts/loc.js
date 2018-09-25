@@ -4,7 +4,7 @@ var commonstyle;
 var geoserver;
 var xyMarker;
 function init(){
-	geoserver="http://39.107.104.63:8080";
+	geoserver="http://111.202.109.210:8080";
     resizeMap();
     initCommonStyle();
     initMap();

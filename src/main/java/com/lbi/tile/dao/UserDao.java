@@ -9,6 +9,7 @@ package com.lbi.tile.dao;
 import com.lbi.tile.model.SysRole;
 import com.lbi.tile.model.SysUser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,10 +34,14 @@ import java.util.List;
 public class UserDao {
     @Resource(name="jdbcTemplate")
     JdbcTemplate jdbcTemplate;
+    @Value("${spring.table.t_sys_role}")
+    String t_sys_role;
+    @Value("${spring.table.t_sys_user}")
+    String t_sys_user;
 
     public SysUser findByUsername(String username){
         try{
-            String sql="select * from t_sys_user where username=?";
+            String sql="select * from "+t_sys_user+" where username=?";
             List<SysUser> list=jdbcTemplate.query(
                     sql,
                     new Object[]{username},
@@ -69,7 +74,7 @@ public class UserDao {
     }
     public SysRole findRoleById(long roleId){
         try{
-            String sql="select * from t_sys_role where id=?";
+            String sql="select * from "+t_sys_role+" where id=?";
             List<SysRole> list=jdbcTemplate.query(
                     sql,
                     new Object[]{roleId},
